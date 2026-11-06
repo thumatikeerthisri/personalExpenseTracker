@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal Expense Tracker MERN Application",
   "scripts": {
-    "build": "npm --prefix frontend run build",
+    "build": "npm --prefix frontend run build && node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive: true});\"",
     "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\" --names \"API,WEB\" --prefix-colors \"yellow,cyan\"",
     "start": "npm run dev",
     "backend": "npm --prefix backend run dev",

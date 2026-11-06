@@ -16,7 +16,7 @@ timeout /t 3 /nobreak >nul
 :: Start frontend and backend concurrently
 echo.
 echo Starting Web Dashboard and Backend API...
-echo Backend:  http://localhost:5000
+echo Backend:  http://localhost:5001
 echo Frontend: http://localhost:5173
 echo ========================================================
 echo.

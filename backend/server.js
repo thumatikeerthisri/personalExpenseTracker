@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const Transaction = require("./models/Transaction");
 const transactionRoutes = require("./routes/transactions");
 
-const PORT = Number(process.env.PORT) || 5000;
+const PORT = Number(process.env.PORT) || 5001;
 const RAW_MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/personalExpenseTracker";
 
 const app = express();
@@ -106,6 +106,13 @@ async function ensureDbConnected() {
   }
   let targetUri = RAW_MONGO_URI;
 
+  if (process.env.VERCEL && (targetUri.includes("localhost") || targetUri.includes("127.0.0.1"))) {
+    console.warn("\n⚠️  [Vercel Configuration Notice]");
+    console.warn("Your MONGO_URI is set to localhost, which is not reachable on Vercel cloud.");
+    console.warn("Please set MONGO_URI to a MongoDB Atlas connection string in Vercel Project Settings.\n");
+    return;
+  }
+
   if (hasPlaceholder(RAW_MONGO_URI)) {
     console.warn("\n⚠️  [Configuration Notice]");
     console.warn("Your MONGO_URI contains placeholder brackets '<...>' or sample text.");
@@ -116,7 +123,7 @@ async function ensureDbConnected() {
 
   try {
     await mongoose.connect(targetUri, {
-      serverSelectionTimeoutMS: 8000
+      serverSelectionTimeoutMS: 5000
     });
     console.log(`MongoDB connected successfully to ${mongoose.connection.host}/${mongoose.connection.name}`);
     await seedMongoIfEmpty();
@@ -126,14 +133,25 @@ async function ensureDbConnected() {
   }
 }
 
-// Start HTTP server for local development or non-Vercel environments
-if (!process.env.VERCEL && require.main === module) {
-  console.log("Starting server...");
-  ensureDbConnected().then(() => {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Backend running at http://localhost:${PORT}`);
-    });
+// Start HTTP server immediately for local development (with auto-fallback if port blocked)
+function startServer(portToTry) {
+  const server = app.listen(portToTry, () => {
+    console.log(`Backend running at http://localhost:${portToTry}`);
   });
+
+  server.on("error", (err) => {
+    if ((err.code === "EADDRINUSE" || err.code === "EACCES") && portToTry < 5010) {
+      console.warn(`[Port Notice] Port ${portToTry} is unavailable (${err.code}). Trying port ${portToTry + 1}...`);
+      startServer(portToTry + 1);
+    } else {
+      console.error("Server listen error:", err.message);
+    }
+  });
+}
+
+if (!process.env.VERCEL) {
+  startServer(PORT);
+  ensureDbConnected().catch(() => {});
 }
 
 module.exports = app;

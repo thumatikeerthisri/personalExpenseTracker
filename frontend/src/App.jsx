@@ -42,9 +42,7 @@ import {
   Legend
 } from "recharts";
 
-const API =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? "/api/transactions" : "http://localhost:5000/api/transactions");
+const API = import.meta.env.VITE_API_URL || "/api/transactions";
 
 const categories = [
   "Food",
@@ -136,8 +134,7 @@ function App() {
 
   const checkDbStatus = useCallback(async () => {
     try {
-      const baseUrl = API.replace(/\/api\/transactions\/?$/, "") || "/";
-      const res = await axios.get(baseUrl);
+      const res = await axios.get("/api");
       if (res.data && res.data.database) {
         setDbStatus(res.data.database);
       }
@@ -174,7 +171,7 @@ function App() {
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Cannot reach backend server. Please make sure the backend is running at http://localhost:5000");
+      setError("Cannot reach backend server. Please make sure the backend is running (run 'npm run dev' or 'run.bat').");
     } finally {
       setLoading(false);
     }

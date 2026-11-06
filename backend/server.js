@@ -32,7 +32,7 @@ app.use(
 
 app.use(express.json({ limit: "20kb" }));
 
-app.get("/", (req, res) => {
+app.get(["/", "/api"], (req, res) => {
   const isMongo = mongoose.connection.readyState === 1;
   res.json({
     message: "Personal Expense Tracker API is running.",
@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/transactions", transactionRoutes);
+app.use(["/api/transactions", "/transactions"], transactionRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {

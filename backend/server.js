@@ -90,8 +90,20 @@ function hasPlaceholder(uri) {
   );
 }
 
-async function start() {
-  console.log("Starting server...");
+// Middleware ensuring DB connection in serverless (e.g. Vercel) environments
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    await ensureDbConnected().catch(() => {});
+  }
+  next();
+});
+
+let isConnected = false;
+
+async function ensureDbConnected() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
   let targetUri = RAW_MONGO_URI;
 
   if (hasPlaceholder(RAW_MONGO_URI)) {
@@ -111,12 +123,17 @@ async function start() {
   } catch (error) {
     console.warn(`[Notice] MongoDB is not reachable (${error.message}).`);
     console.warn("Using local JSON file storage (data/transactions.json) as a fallback.");
-    console.warn("The server is fully functional and ready to accept transactions.");
   }
+}
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Backend running at http://localhost:${PORT}`);
+// Start HTTP server for local development or non-Vercel environments
+if (!process.env.VERCEL && require.main === module) {
+  console.log("Starting server...");
+  ensureDbConnected().then(() => {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Backend running at http://localhost:${PORT}`);
+    });
   });
 }
 
-start();
+module.exports = app;

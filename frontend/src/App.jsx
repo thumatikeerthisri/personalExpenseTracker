@@ -42,7 +42,9 @@ import {
   Legend
 } from "recharts";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api/transactions";
+const API =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? "/api/transactions" : "http://localhost:5000/api/transactions");
 
 const categories = [
   "Food",
@@ -134,7 +136,7 @@ function App() {
 
   const checkDbStatus = useCallback(async () => {
     try {
-      const baseUrl = API.replace(/\/api\/transactions\/?$/, "");
+      const baseUrl = API.replace(/\/api\/transactions\/?$/, "") || "/";
       const res = await axios.get(baseUrl);
       if (res.data && res.data.database) {
         setDbStatus(res.data.database);

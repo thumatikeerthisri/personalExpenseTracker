@@ -90,7 +90,22 @@ MongoDB Server 8.2 is installed at `C:\Program Files\MongoDB\Server\8.2`.
 
 ---
 
-## 3. Features & Modules
+## 3. Deployment to Vercel
+
+This repository is pre-configured with `vercel.json` and serverless API handlers for instant full-stack deployment on Vercel:
+
+1. Push your latest code to GitHub (or use `push-to-github.bat`).
+2. Log in to [Vercel](https://vercel.com/) and click **"Add New..."** -> **"Project"**.
+3. Select your GitHub repository: `personalExpenseTracker`.
+4. Under **Environment Variables**, add:
+   - `MONGO_URI`: Your MongoDB Atlas connection string (`mongodb+srv://...`)
+5. Click **Deploy**.
+
+Vercel will automatically build the React Vite frontend and deploy the Express API as serverless functions with zero additional configuration needed!
+
+---
+
+## 4. Features & Modules
 - **Dashboard**: Snapshot of total income, expenses, net balance, 7/30/90-day cashflow trend line chart, monthly summary bar chart, and recent transactions.
 - **Transactions**: Full transaction table with live search, Type filter (All / Income / Expense), Category filter, and delete actions with confirmation.
 - **Categories**: Visual expenditure breakdown with progress bars, transaction counts, and expense percentages.

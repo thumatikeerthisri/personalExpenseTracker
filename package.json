@@ -1,0 +1,18 @@
+{
+  "name": "personal-expense-tracker",
+  "version": "1.0.0",
+  "description": "Personal Expense Tracker MERN Application",
+  "scripts": {
+    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\" --names \"API,WEB\" --prefix-colors \"yellow,cyan\"",
+    "start": "npm run dev",
+    "backend": "npm --prefix backend run dev",
+    "frontend": "npm --prefix frontend run dev",
+    "test:db": "npm --prefix backend run test:db",
+    "export:db": "npm --prefix backend run export:db",
+    "import:db": "npm --prefix backend run import:db",
+    "mongo:local": "node backend/scripts/run-mongo.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  }
+}

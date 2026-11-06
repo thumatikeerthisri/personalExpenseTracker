@@ -1,0 +1,63 @@
+[
+  {
+    "_id": "67cb2a01f1a234567890abcd",
+    "title": "Monthly Salary",
+    "amount": 65000,
+    "category": "Salary",
+    "type": "income",
+    "date": "2026-11-05T12:00:00.000Z",
+    "createdAt": "2026-11-05T12:00:00.000Z",
+    "updatedAt": "2026-11-05T12:00:00.000Z"
+  },
+  {
+    "_id": "67cb2a01f1a234567890abce",
+    "title": "Grocery Shopping",
+    "amount": 3200,
+    "category": "Food",
+    "type": "expense",
+    "date": "2026-11-04T12:00:00.000Z",
+    "createdAt": "2026-11-04T12:00:00.000Z",
+    "updatedAt": "2026-11-04T12:00:00.000Z"
+  },
+  {
+    "_id": "67cb2a01f1a234567890abcf",
+    "title": "Electricity & WiFi Bill",
+    "amount": 2150,
+    "category": "Bills",
+    "type": "expense",
+    "date": "2026-11-03T12:00:00.000Z",
+    "createdAt": "2026-11-03T12:00:00.000Z",
+    "updatedAt": "2026-11-03T12:00:00.000Z"
+  },
+  {
+    "_id": "67cb2a01f1a234567890abd0",
+    "title": "Freelance Project Design",
+    "amount": 15000,
+    "category": "Freelance",
+    "type": "income",
+    "date": "2026-11-02T12:00:00.000Z",
+    "createdAt": "2026-11-02T12:00:00.000Z",
+    "updatedAt": "2026-11-02T12:00:00.000Z"
+  },
+  {
+    "_id": "67cb2a01f1a234567890abd1",
+    "title": "Weekend Dining & Cinema",
+    "amount": 1650,
+    "category": "Entertainment",
+    "type": "expense",
+    "date": "2026-11-01T12:00:00.000Z",
+    "createdAt": "2026-11-01T12:00:00.000Z",
+    "updatedAt": "2026-11-01T12:00:00.000Z"
+  },
+  {
+    "_id": "67cb2a01f1a234567890abd2",
+    "title": "Metro & Fuel",
+    "amount": 950,
+    "category": "Travel",
+    "type": "expense",
+    "date": "2026-10-31T12:00:00.000Z",
+    "createdAt": "2026-10-31T12:00:00.000Z",
+    "updatedAt": "2026-10-31T12:00:00.000Z"
+  }
+]
+
